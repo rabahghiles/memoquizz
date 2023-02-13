@@ -30,13 +30,16 @@ export const cardsMiddleware = ({dispatch, getState}) => (next) => (action) => {
 
             if ( flippedCard && flippedCard.id === clickedCard.id ) return;
             
-            let newCards = []
+            let newCards = oldCards.map( card => card.id === clickedCard.id ? {...card, flipped: true} : card )
+            dispatch(setCards(newCards));
 
-            if ( !flippedCard ) newCards = oldCards.map( card => card.id === clickedCard.id ? {...card, flipped: true} : card );
-            else if ( flippedCard.index === clickedCard.index ) newCards = oldCards.map( card => card.id === clickedCard.id || card.id === flippedCard.id ? {...card, finded: true, flipped: false} : card );
+            if ( !flippedCard ) return;
+            if ( flippedCard.index === clickedCard.index ) newCards = oldCards.map( card => card.id === clickedCard.id || card.id === flippedCard.id ? {...card, finded: true, flipped: false} : card );
             else newCards = oldCards.map( card => card.flipped ? {...card, flipped: false} : card );
 
-            dispatch(setCards(newCards));
+            setTimeout(() => {
+                dispatch(setCards(newCards));
+            }, 1000)
 
             break;
 
