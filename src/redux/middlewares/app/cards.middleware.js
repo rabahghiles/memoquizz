@@ -1,6 +1,7 @@
 import { FETCH_CARDS, CARDS, setCards, FLIP_CARD } from "../../actions/cards.actions";
 import { apiRequest, API_ERROR, API_SUCCESS} from "../../actions/api.actions";
 import { setLoader } from "../../actions/ui.actions"
+import { incrementTries } from "../../actions/game.actions";
 
 export const cardsMiddleware = ({dispatch, getState}) => (next) => (action) => {
     next(action);
@@ -39,6 +40,7 @@ export const cardsMiddleware = ({dispatch, getState}) => (next) => (action) => {
 
             setTimeout(() => {
                 dispatch(setCards(newCards));
+                dispatch(incrementTries());
             }, 1000)
 
             break;

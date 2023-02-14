@@ -1,0 +1,13 @@
+.gameInformations {
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.gameInformations-score,
+.gameInformations-tries {
+    color: #FFF;
+    font-size: 12px;
+    font-weight: bold;
+}

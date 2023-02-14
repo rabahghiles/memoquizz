@@ -26,15 +26,12 @@ export const apiMiddleware = ({dispatch}) => (next) => (action) => {
             {id: 9, index: 6, flipped: false, finded: false, imgUrl: "https://images.unsplash.com/photo-1626568940331-b9efa277b000?auto=format&fit=crop&w=876&q=80"},
             {id: 10, index: 7, flipped: false, finded: false, imgUrl: "https://images.unsplash.com/photo-1609944433409-81bda5323abc?auto=format&fit=crop&w=876&q=80"},
             {id: 11, index: 7, flipped: false, finded: false, imgUrl: "https://images.unsplash.com/photo-1609944433409-81bda5323abc?auto=format&fit=crop&w=876&q=80"},
-        ]
+        ].sort(() => Math.random() - 0.5);
 
         // Fake API
         setTimeout(() => {
-            dispatch(apiSuccess(
-                cards.sort(() => Math.random() - 0.5),
-                entity
-            ))
-        }, 3000)
+            dispatch(apiSuccess(cards, entity))
+        }, 0)
 
     }
 
