@@ -1,9 +1,9 @@
 import {
-    INCREMENT_TRIES,
-    INCREMENT_SCORE,
+    SET_TRIES,
+    SET_SCORE,
     SET_FINAL_SCORE,
     SET_GAME,
-    SET_GAME_STRARTING_TIME,
+    SET_GAME_STRARTING_TIME
 } from "../actions/game.actions";
 
 const initialState = {
@@ -19,11 +19,11 @@ export const gameReducer = (state = initialState, action) => {
 
     switch ( action.type ) {
 
-        case INCREMENT_TRIES:
-            return {...state, tries: state.tries + 1};
+        case SET_TRIES:
+            return {...state, tries: payload.data};
 
-        case INCREMENT_SCORE:
-            return {...state, score: state.score + 1000};
+        case SET_SCORE:
+            return {...state, score: payload.data};
 
         case SET_FINAL_SCORE:
             return {...state, finalScore: payload.data};

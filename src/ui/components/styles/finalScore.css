@@ -8,7 +8,7 @@
     justify-content: center;
     flex-direction: column;
     transform: scale(0);
-    transition: all ease .28s;
+    transition: all 0.6s ease;
 }
 
 .finalscore__showed {
@@ -25,5 +25,23 @@
 
 .finalscore-score {
     font-size: 48px;
-    margin-bottom: 0;
+    margin-bottom: 40px;
+}
+
+.finalscore-button {
+    cursor: pointer;
+    width: 100%;
+    height: 55px;
+    max-width: 280px;
+    background: #243B55;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #FFF;
+    transition: all 0.6s ease;
+}
+
+.finalscore-button:hover {
+    background: #21364d;
 }

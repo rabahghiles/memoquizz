@@ -1,7 +1,7 @@
 import { FETCH_CARDS, CARDS, setCards, FLIP_CARD } from "../../actions/cards.actions";
 import { apiRequest, API_ERROR, API_SUCCESS} from "../../actions/api.actions";
 import { setLoader } from "../../actions/ui.actions"
-import { incrementScore, incrementTries, setFinalScore, setGame, setGameStartingTime } from "../../actions/game.actions";
+import { setScore, setTries, setFinalScore, setGame, setGameStartingTime } from "../../actions/game.actions";
 import calculateFinalScoreUtil from "../../../utils/calculateFinalScore.util";
 
 export const cardsMiddleware = ({dispatch, getState}) => (next) => (action) => {
@@ -39,10 +39,12 @@ export const cardsMiddleware = ({dispatch, getState}) => (next) => (action) => {
             if ( !flippedCard ) return;
             if ( flippedCard.index === clickedCard.index ) {
                 newCards = oldCards.map( card => card.id === clickedCard.id || card.id === flippedCard.id ? {...card, finded: true, flipped: false} : card );
-                dispatch(incrementScore());
+                const { score } = getState().gameReducer;
+                dispatch(setScore(score + 1000));
             }
             else newCards = oldCards.map( card => card.flipped ? {...card, flipped: false} : card );
-            dispatch(incrementTries());
+            const { tries } = getState().gameReducer;
+            dispatch(setTries(tries + 1));
 
             setTimeout(() => {
                 dispatch(setCards(newCards));
