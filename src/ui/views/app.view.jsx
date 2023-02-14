@@ -14,6 +14,7 @@ const App = () => {
   const cards = useSelector(state => state.cardsReducer.cards);
   const loader = useSelector(state => state.uiReducer.loader);
   const tries = useSelector(state => state.gameReducer.tries);
+  const score = useSelector(state => state.gameReducer.score);
 
   useEffect(() => {
     dispatch(fetchCards(API.CARDS))
@@ -22,7 +23,7 @@ const App = () => {
   return (
     <div className="app">
       <div className="app-inner">
-        <GameInformation tries={tries} />
+        <GameInformation tries={tries} score={score} />
         {
           loader
           ? <Loader />

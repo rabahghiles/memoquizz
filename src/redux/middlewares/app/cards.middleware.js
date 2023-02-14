@@ -1,7 +1,7 @@
 import { FETCH_CARDS, CARDS, setCards, FLIP_CARD } from "../../actions/cards.actions";
 import { apiRequest, API_ERROR, API_SUCCESS} from "../../actions/api.actions";
 import { setLoader } from "../../actions/ui.actions"
-import { incrementTries } from "../../actions/game.actions";
+import { incrementScore, incrementTries } from "../../actions/game.actions";
 
 export const cardsMiddleware = ({dispatch, getState}) => (next) => (action) => {
     next(action);
@@ -35,12 +35,15 @@ export const cardsMiddleware = ({dispatch, getState}) => (next) => (action) => {
             dispatch(setCards(newCards));
 
             if ( !flippedCard ) return;
-            if ( flippedCard.index === clickedCard.index ) newCards = oldCards.map( card => card.id === clickedCard.id || card.id === flippedCard.id ? {...card, finded: true, flipped: false} : card );
+            if ( flippedCard.index === clickedCard.index ) {
+                newCards = oldCards.map( card => card.id === clickedCard.id || card.id === flippedCard.id ? {...card, finded: true, flipped: false} : card );
+                dispatch(incrementScore());
+            }
             else newCards = oldCards.map( card => card.flipped ? {...card, flipped: false} : card );
+            dispatch(incrementTries());
 
             setTimeout(() => {
                 dispatch(setCards(newCards));
-                dispatch(incrementTries());
             }, 1000)
 
             break;
