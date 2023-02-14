@@ -1,7 +1,8 @@
 import { FETCH_CARDS, CARDS, setCards, FLIP_CARD } from "../../actions/cards.actions";
 import { apiRequest, API_ERROR, API_SUCCESS} from "../../actions/api.actions";
 import { setLoader } from "../../actions/ui.actions"
-import { incrementScore, incrementTries } from "../../actions/game.actions";
+import { incrementScore, incrementTries, setFinalScore, setGame, setGameStartingTime } from "../../actions/game.actions";
+import calculateFinalScoreUtil from "../../../utils/calculateFinalScore.util";
 
 export const cardsMiddleware = ({dispatch, getState}) => (next) => (action) => {
     next(action);
@@ -17,6 +18,7 @@ export const cardsMiddleware = ({dispatch, getState}) => (next) => (action) => {
         case `${CARDS} ${API_SUCCESS}`:
             dispatch(setCards(action.payload.data));
             dispatch(setLoader(false, CARDS));
+            dispatch(setGameStartingTime(Date.now()))
             break;
 
         case `${CARDS} ${API_ERROR}`:
@@ -44,7 +46,13 @@ export const cardsMiddleware = ({dispatch, getState}) => (next) => (action) => {
 
             setTimeout(() => {
                 dispatch(setCards(newCards));
-            }, 1000)
+                if ( !newCards.find( card => !card.finded ) ) {
+                    const { tries, score, startingTime } = getState().gameReducer;
+                    const finalScore = calculateFinalScoreUtil(tries, score, startingTime);
+                    dispatch(setFinalScore(finalScore));
+                    dispatch(setGame(false))
+                }
+            }, 600)
 
             break;
 
