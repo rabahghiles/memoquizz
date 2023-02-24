@@ -3,6 +3,7 @@ import {
     SET_SCORE,
     SET_FINAL_SCORE,
     SET_GAME,
+    SET_QUIZZ,
     SET_GAME_STRARTING_TIME
 } from "../actions/game.actions";
 
@@ -10,8 +11,9 @@ const initialState = {
     tries: 0,
     score: 0,
     game: true,
+    quizz: false,
     finalScore: 0,
-    startingTime: 0
+    startingTime: 0,
 }
 
 export const gameReducer = (state = initialState, action) => {
@@ -33,6 +35,9 @@ export const gameReducer = (state = initialState, action) => {
 
         case SET_GAME_STRARTING_TIME:
             return {...state, startingTime: payload.data};
+
+        case SET_QUIZZ:
+            return {...state, quizz: payload.data};
 
         default:
             return state;

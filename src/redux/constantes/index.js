@@ -1,3 +1,6 @@
+const SERVER = "http://localhost:5000";
+
 export const API = {
-    CARDS: "http://api.exemple.com/cards",
+    CARDS: `${SERVER}/cards`,
+    QUIZZ: `${SERVER}/quizz`
 }

@@ -3,6 +3,8 @@ import { apiRequest, API_ERROR, API_SUCCESS} from "../../actions/api.actions";
 import { setLoader } from "../../actions/ui.actions"
 import { setScore, setTries, setFinalScore, setGame, setGameStartingTime } from "../../actions/game.actions";
 import calculateFinalScoreUtil from "../../../utils/calculateFinalScore.util";
+import { fetchQuizz } from "../../actions/quizz.actions";
+import { API } from "../../constantes/index";
 
 export const cardsMiddleware = ({dispatch, getState}) => (next) => (action) => {
     next(action);
@@ -39,10 +41,18 @@ export const cardsMiddleware = ({dispatch, getState}) => (next) => (action) => {
             if ( !flippedCard ) return;
             if ( flippedCard.index === clickedCard.index ) {
                 newCards = oldCards.map( card => card.id === clickedCard.id || card.id === flippedCard.id ? {...card, finded: true, flipped: false} : card );
-                const { score } = getState().gameReducer;
-                dispatch(setScore(score + 1000));
+                // ** QUIZZ ** //
+                dispatch(fetchQuizz(`${API.QUIZZ}/${clickedCard.index}`))
+                
+                // Aller chercher le quizz
+                // dispatch(apiRequest(null, "GET", action.payload.data, QUIZZ));
+                
+                // const { score } = getState().gameReducer;
+                // dispatch(setScore(score + 1000));
             }
-            else newCards = oldCards.map( card => card.flipped ? {...card, flipped: false} : card );
+            else {
+                newCards = oldCards.map( card => card.flipped ? {...card, flipped: false} : card );
+            }
             const { tries } = getState().gameReducer;
             dispatch(setTries(tries + 1));
 

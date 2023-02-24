@@ -1,4 +1,4 @@
-export const GAME = '[GAME]';
+export const GAME = '[Game]';
 
 export const SET_TRIES = `${GAME} SET_TRIES`;
 export const SET_SCORE = `${GAME} SET_SCORE`;
@@ -6,6 +6,7 @@ export const SET_FINAL_SCORE = `${GAME} SET_FINAL_SCORE`;
 export const SET_GAME = `${GAME} Set`;
 export const SET_GAME_STRARTING_TIME = `${GAME} SET_GAME_STRARTING_TIME`;
 export const RESTART_GAME = `${GAME} Restart`;
+export const SET_QUIZZ = `${GAME} SET_QUIZZ`;
 
 export const setTries = (tries) => ({
     type: SET_TRIES,
@@ -44,4 +45,11 @@ export const setGameStartingTime = (time) => ({
 
 export const restartGame = () => ({
     type: RESTART_GAME,
+})
+
+export const setGameQuizz = (status) => ({
+    type: SET_QUIZZ,
+    payload: {
+        data: status,
+    }
 })
